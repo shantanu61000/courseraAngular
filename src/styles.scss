@@ -1,1 +1,17 @@
 /* You can add global styles to this file, and also import other style files */
+body{
+    padding: 0px;
+    margin: 0px;
+    font-family: Roboto, sans-serif;
+    font-size: 80%;
+}
+.container{
+    margin: 20px;
+    display:flex;
+}
+
+@media(min-width:768px){
+    body{
+        font-size: 100%;
+    }
+}
