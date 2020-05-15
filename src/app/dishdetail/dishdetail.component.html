@@ -26,9 +26,8 @@
       </div>
   </div>
 
-  <div fxFlex="40">
+  <div fxFlex="40" *ngIf="dish">
             <h3>Comments</h3>
-
             <mat-list fxflex>
                 <mat-list-item *ngFor="let comment of dish.comments"> 
                   <p matLine> {{comment.comment}}</p>
@@ -36,6 +35,4 @@
                   <p matLine>--{{comment.author}} {{comment.date | date}}</p> 
                 </mat-list-item>                
             </mat-list>
-
-
 </div>
