@@ -30,11 +30,12 @@ import { FooterComponent } from './footer/footer.component';
 import { PromotionService} from './services/promotion.service';
 import { DishService } from './services/dish.service';
 import { LeaderService } from './services/leader.service';
-
+import { ProcessHTTPmsgService } from './services/process-httpmsg.service';
+import { HttpClientModule } from '@angular/common/http';
 import 'hammerjs';
 import { LoginComponent } from './login/login.component';
-
-
+import { baseURL } from './shared/baseurl';
+import { HighlightDirective } from './directives/highlight.directive';
 @NgModule({
   declarations: [
     AppComponent,
@@ -45,7 +46,8 @@ import { LoginComponent } from './login/login.component';
     AboutComponent,
     HomeComponent,
     ContactComponent,
-    LoginComponent
+    LoginComponent,
+    HighlightDirective
   ],
   imports: [
     BrowserModule,
@@ -66,7 +68,8 @@ import { LoginComponent } from './login/login.component';
     MatSelectModule,
     MatSlideToggleModule,
     MatProgressSpinnerModule,
-    MatSliderModule
+    MatSliderModule,
+    HttpClientModule
   ],
   entryComponents:[
     LoginComponent
@@ -74,7 +77,9 @@ import { LoginComponent } from './login/login.component';
   providers: [
     DishService,
     PromotionService,
-    LeaderService
+    LeaderService,
+    ProcessHTTPmsgService,
+    { provide: 'BaseURL', useValue: baseURL }
   ],
 
   bootstrap: [AppComponent]

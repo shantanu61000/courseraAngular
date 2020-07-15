@@ -49,7 +49,12 @@ body{
     margin: 20px;
     display:flex;
 }
-
+.highlight{
+    background-color: $background-pale;
+    border: solid 1px $primary-color-dark;
+    z-index: 1;
+    transform: scale(1.01);
+}
 @media(min-width:768px){
     body{
         font-size: 100%;

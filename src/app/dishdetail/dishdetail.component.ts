@@ -1,4 +1,4 @@
-import { Component, OnInit} from '@angular/core';
+import { Component, OnInit,Inject} from '@angular/core';
 import { Dish } from '../shared/dish';
 import { Params, ActivatedRoute } from '@angular/router';
 import { Location } from '@angular/common';
@@ -21,6 +21,8 @@ export class DishdetailComponent implements OnInit {
     next: string;
     commentForm : FormGroup;
     comment: Comment;
+    errMess: string;
+    dishCopy: Dish;
 
     formErrors = {
       'author':'',
@@ -38,7 +40,7 @@ export class DishdetailComponent implements OnInit {
       }
       
     };
-  constructor(private fb:FormBuilder, private dishService: DishService, private route:ActivatedRoute, private location: Location ) {
+  constructor(private fb:FormBuilder, private dishService: DishService, private route:ActivatedRoute, private location: Location ,@Inject('BaseURL') public BaseURL) {
     this.createFrom();
    }
   createFrom(){
@@ -80,14 +82,15 @@ export class DishdetailComponent implements OnInit {
     console.log(this.comment);
     let date = new Date();
     this.comment.date = date.toISOString();
-    this.dish.comments.push(this.comment);
+    this.dishCopy.comments.push(this.comment);
+    this.dishService.putDish(this.dishCopy).subscribe(dish => {this.dish=dish; this.dishCopy= dish},errmes=>{ this.errMess=errmes;});
     this.commentForm.reset();
     this.commentForm.get('rating').setValue("5");
   }
   ngOnInit() {
     this.dishService.getDishIds().subscribe(dishIds => this.dishIds = dishIds);
     this.route.params.pipe(switchMap((params: Params) => this.dishService.getDish(params['id'])))
-    .subscribe(dish => { this.dish = dish; this.setPrevNext(dish.id); });
+    .subscribe(dish => { this.dish = dish; this.dishCopy = dish; this.setPrevNext(dish.id); },errmess => this.errMess = <any> errmess);
   }
 
   setPrevNext(dishId: string) {
